@@ -1,16 +1,23 @@
 using System;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerInput : NetworkBehaviour
 {
     [SerializeField]
     KeyCode m_KeyCode;
 
-    [SerializeField]
-    ActionScriptableObject m_ActionScriptableObject;
+    public UnityEvent clientActionRequestedUnityEvent;
 
-    public event Action<ActionScriptableObject> clientActionRequested;
+    public override void OnNetworkSpawn()
+    {
+        if (!IsClient || !IsOwner)
+        {
+            enabled = false;
+            return;
+        }
+    }
 
     void Update()
     {
@@ -20,10 +27,9 @@ public class PlayerInput : NetworkBehaviour
         }
     }
 
-
     [ServerRpc]
     void PlayerInputServerRpc()
     {
-        clientActionRequested?.Invoke(m_ActionScriptableObject);
+        clientActionRequestedUnityEvent?.Invoke();
     }
 }

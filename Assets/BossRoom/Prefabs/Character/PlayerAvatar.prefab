@@ -80,7 +80,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ClientVisualsAnimator: {fileID: 1829276847453002016}
-  m_CharacterSwapper: {fileID: 0}
   m_VisualizationConfiguration: {fileID: 11400000, guid: 9504973cdecd65749889771972fa0117, type: 2}
 --- !u!1001 &7831782662127126385
 PrefabInstance:
@@ -377,3 +376,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_FeedbackPrefab: {fileID: 9137928905311479176, guid: 5d22c1d86e0e5604cbe14004bf924827, type: 3}
+--- !u!114 &3465533190404142658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6009713983291384756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b45c00af4e902c4a901f033f47ab43a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_KeyCode: 112
+  clientActionRequestedUnityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5590355571592356747}
+        m_TargetAssemblyTypeName: ServerActionHandler, Assembly-CSharp
+        m_MethodName: Execute
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5590355571592356747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6009713983291384756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e12cc3ed8ad2ab94792adc41ff2d6aad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ActionScriptableObject: {fileID: 11400000, guid: dd35954a7014a3b4497040a9d6c647d3, type: 2}
