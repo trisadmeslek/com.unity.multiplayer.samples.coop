@@ -67,6 +67,7 @@ namespace Unity.Multiplayer.Samples.BossRoom.Visual
 
                         m_TargetReticule.transform.parent = parentTransform;
                         m_TargetReticule.transform.localPosition = new Vector3(0, k_ReticuleGroundHeight, 0);
+                        m_TargetReticule.transform.localRotation = Quaternion.Euler(90, 0f, 0f);
                     }
 
                 }

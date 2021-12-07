@@ -26,6 +26,8 @@ namespace Unity.Multiplayer.Samples.BossRoom.Server
             if (pickUpObject)
             {
                 pickUpObject.transform.SetParent(null);
+                pickUpObject.transform.position = new Vector3(pickUpObject.transform.position.x, 0f, pickUpObject.transform.position.z);
+                pickUpObject.transform.rotation = Quaternion.identity;
 
                 Data.TargetIds = null;
 
@@ -60,11 +62,13 @@ namespace Unity.Multiplayer.Samples.BossRoom.Server
 
             var handNetworkObject = m_Parent.serverAnimationHandler.NetworkAnimator.GetComponentInChildren<NetworkObject>();
 
-            // found a suitable collider; try to child this NetworkObject
             if (!heavyNetworkObject.TrySetParent(handNetworkObject.transform))
             {
                 return false;
             }
+
+            heavyNetworkObject.transform.localPosition = Vector3.zero;
+            heavyNetworkObject.transform.localRotation = Quaternion.identity;
 
             Data.TargetIds = new ulong[] { heavyNetworkObject.NetworkObjectId };
 
