@@ -58,8 +58,10 @@ namespace Unity.Multiplayer.Samples.BossRoom.Server
                 return false;
             }
 
+            var handNetworkObject = m_Parent.serverAnimationHandler.NetworkAnimator.GetComponentInChildren<NetworkObject>();
+
             // found a suitable collider; try to child this NetworkObject
-            if (!heavyNetworkObject.TrySetParent(m_Parent.transform))
+            if (!heavyNetworkObject.TrySetParent(handNetworkObject.transform))
             {
                 return false;
             }
