@@ -57,6 +57,9 @@ namespace Unity.Multiplayer.Samples.BossRoom.Visual
 
         [SerializeField]
         Toggle m_UnityRelayRadioButton;
+        
+        [SerializeField]
+        Toggle m_UnityLobbyRadioButton;
 
         bool m_EnterAsHost;
 
@@ -127,6 +130,11 @@ namespace Unity.Multiplayer.Samples.BossRoom.Visual
             m_UnityRelayRadioButton.gameObject.SetActive(true);
             m_UnityRelayRadioButton.onValueChanged.AddListener(UnityRelayRadioRadioButtonPressed);
             m_UnityRelayRadioButton.isOn = false;
+            
+            m_UnityLobbyRadioButton.gameObject.SetActive(true);
+            m_UnityLobbyRadioButton.onValueChanged.AddListener(UnityLobbyRadioButtonPressed);
+            m_UnityLobbyRadioButton.isOn = false;
+            
             m_IPRadioButton.isOn = true;
 
             m_CancelButton.onClick.AddListener(OnCancelClick);
@@ -138,6 +146,20 @@ namespace Unity.Multiplayer.Samples.BossRoom.Visual
             m_NameDisplay.gameObject.SetActive(true);
 
             gameObject.SetActive(true);
+        }
+
+        private void UnityLobbyRadioButtonPressed(bool value)
+        {
+            if (!value)
+            {
+                return;
+            }
+
+            if (m_OnlineMode != OnlineMode.Lobby)
+            {
+                m_OnlineMode = OnlineMode.Lobby;
+                OnOnlineModeDropdownChanged(m_OnlineMode);
+            }
         }
 
         void IPRadioRadioButtonPressed(bool value)
@@ -316,6 +338,10 @@ namespace Unity.Multiplayer.Samples.BossRoom.Visual
                     }
                 }
             }
+            else if (value == OnlineMode.Lobby)
+            {
+                
+            }
         }
 
         void SetupEnterGameDisplayForUnityRelay()
@@ -337,6 +363,38 @@ namespace Unity.Multiplayer.Samples.BossRoom.Visual
 
             m_PortInputField.gameObject.SetActive(false);
             m_PortInputField.text = "";
+        }
+
+        async Task<bool> UnityAuthenticationAnonymousSignIn()
+        {
+            try
+            {
+                if (UnityServices.State == ServicesInitializationState.Uninitialized)
+                {
+                    await UnityServices.InitializeAsync();
+                }
+
+                if (!AuthenticationService.Instance.IsSignedIn)
+                {
+                    await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                    Debug.Log(AuthenticationService.Instance.PlayerId);
+                }
+
+                return true;
+            }
+            catch (RequestFailedException e)
+            {
+                Debug.LogException(e);
+                return false;
+            }
+        }
+
+        async Task<bool> UnityLobbyFetchCall()
+        {
+            await UnityAuthenticationAnonymousSignIn();
+
+            //todo: - fetch public lobby list
+            return false;
         }
 
         async Task<bool> UnityRelayHealthCheckCall()
